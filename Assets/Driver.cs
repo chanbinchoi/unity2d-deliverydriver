@@ -5,8 +5,8 @@ using UnityEngine;
 public class Driver : MonoBehaviour
 {
 
-    float steerSpeed = 1f;
-    float moveSpeed = 0.01f;
+    [SerializeField] float steerSpeed = 1f;
+    [SerializeField] float moveSpeed = 0.001f;
 
     void Start()
     {
@@ -16,7 +16,9 @@ public class Driver : MonoBehaviour
 
     void Update()
     {
-        transform.Rotate(0, 0, steerSpeed);
-        transform.Translate(0, moveSpeed, 0);
+        float steerAmount = Input.GetAxis("Horizontal") * steerSpeed * Time.deltaTime; // 좌우
+        float moveAmount = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime; // 상하
+        transform.Rotate(0, 0, -steerAmount); // Z축 기준으로 회전
+        transform.Translate(0, moveAmount, 0); // Y축 방향으로 이동
     }
 }
